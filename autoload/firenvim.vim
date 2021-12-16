@@ -833,6 +833,12 @@ endfunction
 
 function! firenvim#onUIEnter(event) abort
         let l:ui = nvim_get_chan_info(a:event.chan)
+        "" From https://github.com/glacambre/firenvim/issues/110#issuecomment-550137400
+      	if has_key(l:ui, 'client') && has_key(l:ui.client, 'name')
+      		if l:ui.client.name ==# 'Firenvim'
+      			set guifont=Iosevka:h16
+      		endif
+      	endif
         if has_key(l:ui, 'client') && has_key(l:ui.client, 'name') &&
                                 \ l:ui.client.name =~? 'Firenvim'
                 call map(nvim_list_bufs(), {key, val -> firenvimft#detect(val)})
